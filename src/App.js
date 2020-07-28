@@ -6,27 +6,18 @@ import About from "./components/pages/About.js";
 import Header from "./components/layout/Header.js";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 class App extends React.Component {
   state = {
-    todos: [
-      {
-        id: uuidv4(),
-        title: "Take out the Trash",
-        completed: false,
-      },
-      {
-        id: uuidv4(),
-        title: "Make Dinner",
-        completed: true,
-      },
-      {
-        id: uuidv4(),
-        title: "Hoover up house",
-        completed: false,
-      },
-    ],
+    todos: [],
   };
+
+  componentDidMount() {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos?_limit=10")
+      .then((res) => this.setState({ todos: res.data }));
+  }
 
   //toggle complete
   markComplete = (id) => {
